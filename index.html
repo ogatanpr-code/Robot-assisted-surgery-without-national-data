@@ -1,0 +1,236 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>
+<title>ロボット支援手術の実績 2025</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap">
+<style>
+:root{
+  --ground:#ffffff;
+  --grid:#dbe8f4;
+  --ink:#16324f;
+  --ink-2:#47607a;
+  --ink-3:#7b8ea3;
+  --blue:#1f5fa8;
+  --blue-soft:#e6f0fa;
+  --blue-line:#b9d2ea;
+  --ref:#16324f;
+  --warn-bg:#fff6e0;
+  --warn-line:#e2b64a;
+  --warn-ink:#6b4e05;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;padding-inline:16px;padding-block:0 56px;
+  font-family:"BIZ UDPGothic","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+  font-size:16px;line-height:1.85;color:var(--ink);
+  background-color:var(--ground);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:10px 10px;
+  font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:920px;margin-inline:auto;display:flex;flex-direction:column;gap:40px}
+.draft{
+  margin-top:16px;background:var(--warn-bg);border:1px solid var(--warn-line);color:var(--warn-ink);
+  padding:8px 14px;font-size:13.5px;line-height:1.6;border-radius:4px
+}
+header{padding-top:8px;display:flex;flex-direction:column;gap:10px}
+.org{font-size:14px;color:var(--ink-2);letter-spacing:.08em}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.3;margin:0;text-wrap:balance;color:var(--blue)}
+.lede{max-width:40em;margin:0;color:var(--ink)}
+section{display:flex;flex-direction:column;gap:16px}
+h2{font-size:22px;line-height:1.4;margin:0;padding-bottom:6px;border-bottom:3px solid var(--blue);color:var(--ink);text-wrap:balance}
+h3{font-size:16px;margin:0;color:var(--ink)}
+p{margin:0;max-width:42em}
+.panel{background:var(--ground);border:1px solid var(--blue-line);border-radius:6px;padding:20px}
+.tag{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--blue);background:var(--blue-soft);border:1px solid var(--blue-line);border-radius:999px;padding:1px 12px;align-self:flex-start}
+
+/* summary strip */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--ground);border:1px solid var(--blue-line);border-radius:6px}
+.strip div{padding:16px 20px;border-left:1px solid var(--blue-line)}
+.strip div:first-child{border-left:0}
+.strip .k{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.strip .v{font-size:34px;font-weight:700;line-height:1.2;color:var(--blue)}
+.strip .v small{font-size:15px;font-weight:400;color:var(--ink);margin-left:3px}
+@media(max-width:560px){
+  .strip{grid-template-columns:1fr}
+  .strip div{border-left:0;border-top:1px solid var(--blue-line)}
+  .strip div:first-child{border-top:0}
+}
+
+/* bar rows */
+.chart{display:flex;flex-direction:column;gap:4px}
+.dept{font-size:13px;font-weight:700;color:var(--ink-2);letter-spacing:.06em;margin-top:12px}
+.dept:first-child{margin-top:0}
+.row{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr) 9.5em;gap:12px;align-items:center;padding:5px 4px;border-radius:4px}
+.row:hover,.row:focus-visible{background:var(--blue-soft);outline:none}
+.row .name{font-size:14.5px;line-height:1.45}
+.row .name small{display:block;color:var(--ink-3);font-size:12px}
+.track{position:relative;height:26px;border-left:1px solid var(--ink-3);
+  background-image:linear-gradient(90deg,transparent calc(100% - 1px),var(--blue-line) calc(100% - 1px));background-size:calc(100%/var(--div)) 100%}
+.bar{position:absolute;left:0;top:6px;height:14px;background:var(--blue);border-radius:0 4px 4px 0}
+.ref{position:absolute;top:0;bottom:0;width:0;border-left:3px dotted var(--ref);transform:translateX(-1.5px)}
+.val{font-size:14px;line-height:1.4;text-align:right;white-space:nowrap}
+.val b{font-size:17px}
+.val span{display:block;color:var(--ink-2);font-size:12.5px}
+.axis{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr) 9.5em;gap:12px;padding-inline:4px;font-size:12px;color:var(--ink-3)}
+.axis .ticks{position:relative;height:18px}
+.axis .ticks i{position:absolute;top:0;white-space:nowrap;font-style:normal;transform:translateX(-50%)}
+.axis .ticks i:first-child{transform:none}
+.axis .ticks i:last-child{transform:translateX(-100%)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13.5px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.lg-bar{width:26px;height:12px;background:var(--blue);border-radius:0 4px 4px 0}
+.lg-ref{width:0;height:18px;border-left:3px dotted var(--ref)}
+@media(max-width:640px){
+  .row,.axis{grid-template-columns:minmax(0,1fr) auto;gap:2px 10px}
+  .row .name{grid-column:1/-1}
+  .axis .sp{display:none}
+  .axis .ticks{grid-column:1}
+  .axis::after{content:"";width:7.5em}
+  .val{width:7.5em}
+}
+
+.note{font-size:14px;color:var(--ink-2);line-height:1.75}
+.note li{margin-bottom:4px}
+ul.note{margin:0;padding-left:1.3em;max-width:46em}
+.box{border:2px solid var(--blue);border-radius:6px;background:var(--ground);padding:16px 20px;display:flex;flex-direction:column;gap:6px}
+.box h3{color:var(--blue)}
+
+.tbl{overflow-x:auto;background:var(--ground);border:1px solid var(--blue-line);border-radius:6px}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px;line-height:1.5}
+th,td{padding:9px 12px;border-bottom:1px solid var(--blue-line);text-align:right;vertical-align:top}
+th{background:var(--blue-soft);font-weight:700;color:var(--ink);font-size:13px}
+th:first-child,td:first-child,th:nth-child(2),td:nth-child(2){text-align:left}
+tbody tr:last-child td{border-bottom:0}
+td.m{color:var(--ink-3)}
+dl{margin:0;display:grid;grid-template-columns:9em minmax(0,1fr);gap:8px 16px;font-size:14px;line-height:1.7}
+dt{font-weight:700;color:var(--ink)}
+dd{margin:0;color:var(--ink-2)}
+@media(max-width:560px){dl{grid-template-columns:1fr;gap:2px}dd{margin-bottom:8px}}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;font-size:13px;line-height:1.6;padding:8px 12px;border-radius:4px;max-width:260px;z-index:5}
+footer{font-size:13px;color:var(--ink-3)}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="org">昭和医科大学横浜市北部病院　病院指標</div>
+    <h1>ロボット支援手術の実績</h1>
+    <p class="lede">当院では、手術支援ロボット「ダヴィンチ」を用いた、からだへの負担が少ない手術（低侵襲手術）を5つの診療科・センターで行っています。2025年度（2025年4月〜2026年3月）の実績を、件数・手術時間・入院日数の3つの面からお示しします。</p>
+  </header>
+
+  <div class="strip" role="group" aria-label="2025年度の概要">
+    <div><div class="k">ロボット支援手術</div><div class="v">236<small>件</small></div></div>
+    <div><div class="k">実施している診療科・センター</div><div class="v">5<small>部門</small></div></div>
+    <div><div class="k">実施した術式</div><div class="v">15<small>術式</small></div></div>
+  </div>
+
+  <section>
+    <span class="tag">件数</span>
+    <h2>1. どの手術を、どのくらい行っているか</h2>
+    <p>2025年度に行ったロボット支援手術の件数です。大腸（結腸・直腸）と前立腺の手術が全体の約3分の2を占めています。</p>
+    <div class="panel">
+      <div class="chart" id="cnt"></div>
+    </div>
+    <p class="note">直腸の手術は、低位前方切除術33件・切除術18件・切断術4件・経肛門吻合を伴う切除術1件の合計です。胃切除術は、噴門側胃切除術（胃の入口側を切除する手術）7件を含みます。</p>
+  </section>
+
+  <section>
+    <span class="tag">入院日数　短いほど早い退院</span>
+    <h2>2. 入院日数（平均在院日数）</h2>
+    <p>入院から退院までの平均日数です。年間10件以上行った術式を対象としています。</p>
+    <div class="panel">
+      <div class="chart" id="los"></div>
+    </div>
+    <div class="box">
+      <h3>この数値の見方</h3>
+      <p class="note">入院日数は、患者さんの年齢やほかの病気の有無、手術前の検査・治療のための入院、退院後の生活の準備などによっても変わります。同じ術式でも一人ひとり異なりますので、めやすとしてご覧ください。</p>
+    </div>
+    <div class="box">
+      <h3>今後の取り組み</h3>
+      <p class="note">腎臓や骨盤臓器脱の手術は、比較的短い入院期間で回復いただいています。一方、直腸や胃の手術は入院期間が長くなりやすいため、手術前後の過ごし方をまとめた診療計画（クリニカルパス）の見直しや、早期からの退院支援を進めてまいります。</p>
+    </div>
+  </section>
+
+  <section>
+    <span class="tag">手術時間</span>
+    <h2>3. 手術時間のめやす</h2>
+    <p>執刀開始から終了までの平均時間です。実際の時間は、病気の状態やからだの状況によって一人ひとり異なります。</p>
+    <div class="panel"><div class="chart" id="opt"></div></div>
+  </section>
+
+  <section>
+    <h2>数値一覧（2025年度）</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>診療科</th><th>術式</th><th>件数</th><th>平均手術時間</th><th>平均在院日数</th></tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+    <p class="note">「－」：年間10件未満の術式は、平均値が個々の患者さんの状況に大きく左右されるため、手術時間・在院日数を掲載していません。</p>
+  </section>
+
+  <section>
+    <h2>指標の定義と出典</h2>
+    <div class="panel">
+      <dl>
+        <dt>対象</dt><dd>2025年度に当院で手術支援ロボット（ダヴィンチ）を用いて行った手術</dd>
+        <dt>手術時間</dt><dd>執刀開始から終了までの時間（分）の平均。当院手術部システムによる</dd>
+        <dt>在院日数</dt><dd>入院日から退院日までの実日数の平均。当院DPCデータによる</dd>
+        <dt>複数術式の合算</dt><dd>直腸の手術・胃切除術の平均値は、術式別の平均を件数で加重して算出</dd>
+      </dl>
+    </div>
+  </section>
+
+  <footer>昭和医科大学横浜市北部病院</footer>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+// 単一データソース：このページの図表はすべてこの配列から描画
+const DATA=[
+ {dept:"消化器外科",name:"結腸がんの手術",formal:"結腸悪性腫瘍切除術",n:54,op:225,los:17.5},
+ {dept:"消化器外科",name:"直腸がんの手術",formal:"直腸切除・切断術（低位前方切除術ほか）",n:56,op:304,los:25.0},
+ {dept:"消化器外科",name:"胃がんの手術（胃切除）",formal:"胃切除術（噴門側胃切除術を含む）",n:21,op:322,los:22.4},
+ {dept:"消化器外科",name:"胃がんの手術（胃全摘）",formal:"胃全摘術",n:5},
+ {dept:"泌尿器科",name:"前立腺がんの手術",formal:"前立腺全摘除術（RARP）",n:49,op:202,los:12.4},
+ {dept:"泌尿器科",name:"腎がんの手術（腎部分切除）",formal:"腎部分切除術",n:12,op:245,los:7.6},
+ {dept:"女性骨盤底センター",name:"骨盤臓器脱の手術",formal:"仙骨腟固定術",n:24,op:335,los:6.2},
+ {dept:"呼吸器外科",name:"縦隔腫瘍の手術",formal:"縦隔悪性腫瘍手術",n:8},
+ {dept:"呼吸器外科",name:"肺がんの手術（区域切除）",formal:"肺悪性腫瘍手術（区域切除）",n:5},
+ {dept:"呼吸器外科",name:"胸腺の手術",formal:"拡大胸腺摘出術",n:1},
+ {dept:"婦人科",name:"子宮体がんの手術",formal:"子宮悪性腫瘍手術（子宮体がん）",n:1}
+];
+const hm=m=>Math.floor(m/60)+"時間"+(m%60?String(m%60)+"分":"");
+const tip=document.getElementById("tip");
+function axis(max,step,unit){
+  let t="";for(let v=0;v<=max;v+=step)t+=`<i style="left:${v/max*100}%">${v}${v===max?unit:""}</i>`;
+  return `<div class="axis"><span class="sp"></span><div class="ticks">${t}</div><span class="sp"></span></div>`;
+}
+function draw(id,rows,max,step,unit,get,ref,valHtml,tipHtml){
+  let h="",d="";
+  rows.forEach((r,i)=>{
+    if(r.dept!==d){d=r.dept;h+=`<div class="dept">${d}</div>`;}
+    h+=`<div class="row" tabindex="0" data-tip="${encodeURIComponent(tipHtml(r))}">
+      <div class="name">${r.name}<small>${r.formal}</small></div>
+      <div class="track" style="--div:${max/step}"><div class="bar" style="width:${get(r)/max*100}%"></div>${ref&&ref(r)!=null?`<div class="ref" style="left:${ref(r)/max*100}%"></div>`:""}</div>
+      <div class="val">${valHtml(r)}</div></div>`;
+  });
+  document.getElementById(id).innerHTML=h+axis(max,step,unit);
+}
+const big=DATA.filter(r=>r.n>=10);
+draw("cnt",DATA,60,20,"件",r=>r.n,null,r=>`<b>${r.n}</b> 件`,r=>`<b>${r.formal}</b><br>${r.dept}　${r.n}件`);
+draw("los",big,30,10,"日",r=>r.los,null,
+  r=>`<b>${r.los.toFixed(1)}</b> 日`,
+  r=>`<b>${r.formal}</b>（${r.n}件）<br>平均在院日数 ${r.los.toFixed(1)}日`);
+draw("opt",big,360,120,"分",r=>r.op,null,r=>`<b>${r.op}</b> 分<span>約${hm(Math.round(r.op/5)*5)}</span>`,r=>`<b>${r.formal}</b>（${r.n}件）<br>平均 ${r.op}分`);
+document.getElementById("tb").innerHTML=DATA.map(r=>`<tr><td>${r.dept}</td><td>${r.formal}</td><td>${r.n}</td>${
+  r.n>=10?`<td>${r.op}分</td><td>${r.los.toFixed(1)}日</td>`:`<td class="m">－</td><td class="m">－</td>`}</tr>`).join("");
+document.querySelectorAll(".row").forEach(el=>{
+  const show=(x,y)=>{tip.innerHTML=decodeURIComponent(el.dataset.tip);tip.hidden=false;
+    const w=tip.offsetWidth,hh=tip.offsetHeight;
+    tip.style.left=Math.max(8,Math.min(x+14,innerWidth-w-8))+"px";tip.style.top=Math.max(8,y-hh-12)+"px";};
+  el.addEventListener("mousemove",e=>show(e.clientX,e.clientY));
+  el.addEventListener("mouseleave",()=>tip.hidden=true);
+  el.addEventListener("focus",()=>{const b=el.getBoundingClientRect();show(b.left+40,b.top);});
+  el.addEventListener("blur",()=>tip.hidden=true);
+});
+</script>
+</body></html>
